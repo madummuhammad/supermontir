@@ -10,7 +10,7 @@ import { usePage } from '@inertiajs/vue3'
 
 const page = usePage()
 import { useForm } from '@inertiajs/vue3';
-// import Footer from '../../components/Footer.vue';
+import Footer from '../../components/dashboard/Footer.vue';
 
 export default {
     props:{
@@ -67,14 +67,14 @@ export default {
     components: {
         Header,
         Sidebar,
-        // Footer,
+        Footer,
     },
 };
 </script>
 <template>
     <Header/>
-        <div class="container-fluid bg-slate-300 pt-5">
-          <div class="container mx-auto">
+        <div class="container-fluid  bg-slate-300 pt-5 md:pb-0 pb-24">
+          <div class="container mx-auto mt-20 md:mt-5">
             <div class="flex justify-center gap-5">
                 <Sidebar/>
 
@@ -98,13 +98,21 @@ export default {
         <!-- table -->
         <div class="overflow-x-auto w-full">
           <div class="w-full flex md:flex-row flex-col">
+             <div class="md:hidden md:w-1/3 w-ful flex justify-center items-center flex-col">
+                  <img v-if="form.image == null" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" class="w-36 h-36 rounded-full object-cover mb-4"/>
+                  <img v-if="form.image !== null" :src="form.image" alt="" class="w-36 h-36 rounded-full object-cover mb-4"/>
+                  <input type="file" @change="handleImageChange" accept=".png,.jpg,.jpeg" id="gambar" hidden>
+                  <label class="button-primary cursor-pointer" for="gambar">Pilih Gambar</label>
+                  <p class="text-sm text-gray-500 mt-2">Ukuran gambar: maks 1 MB</p>
+                  <p class="text-sm text-gray-500">Format gambar: jpeg, png</p>
+                </div>
             <form
              @submit.prevent="submit"
               class="md:w-2/3 w-full px-4 text-left md:border-e-2 mb-4"
             >
-              <div class="flex flex-row mb-2">
+              <div class="md:flex flex-row mb-2">
                 <label for="name" class="text-gray-500 w-1/3">Nama</label>
-                <div class="w-2/3">
+                <div class="w-full md:w-2/3">
                     <input v-model="form.name"
                       type="text"
                       name="name"
@@ -114,9 +122,9 @@ export default {
                     <p class="text-red-700 text-sm">{{ form.errors.name }}</p>
                 </div>
             </div>
-            <div class="flex flex-row mb-2">
+            <div class="md:flex flex-row mb-2">
                 <label for="email" class="text-gray-500 w-1/3">Email</label>
-                <div class="w-2/3">
+                <div class="w-full md:w-2/3">
                     <input v-model="form.email"
                     type="text"
                       name="email"
@@ -126,9 +134,9 @@ export default {
                       <p class="text-red-700 text-sm">{{ form.errors.email }}</p>
                 </div>
                 </div>
-                <div class="flex flex-row mb-2">
+                <div class="md:flex flex-row mb-2">
                 <label for="telp" class="text-gray-500 w-1/3">No. Telepon</label>
-                <div class="w-2/3">
+                <div class="w-full md:w-2/3">
                     <input v-model="form.wa"
                       type="text"
                       name="telp"
@@ -139,11 +147,11 @@ export default {
                     </div>
                 </div>
               <!-- jenis kelamin -->
-              <div class="flex flex-row mb-2">
+              <div class="md:flex flex-row mb-2">
                 <label for="gender" class="text-gray-500 w-1/3"
                   >Jenis Kelamin</label
                 >
-                <div class="w-2/3">
+                <div class="w-full md:w-2/3">
                     <select
                       name="gender"
                       id="gender"  v-model="form.jenis_kelamin"
@@ -156,11 +164,11 @@ export default {
             </div>
         </div>
               <!-- tanggal lahir -->
-              <div class="flex flex-row mb-2">
+              <div class="md:flex flex-row mb-2">
                 <label for="birthdateDay" class="text-gray-500 w-1/3"
                   >Tgl. Lahir</label
                 >
-                <div class="w-2/3">
+                <div class="w-full md:w-2/3">
                     <input
                          type="date" v-model="form.tanggal_lahir"
                          name="telp"
@@ -200,25 +208,17 @@ export default {
                 </div> -->
               </div>
 
-              <div class="flex justify-between gap-2 mt-5">
-                <button type="submit" class="bg-[#2F318B] px-12 py-4 rounded-md font-bold text-white">Simpan</button>
-                <button type="submit" class="button-secondary">
+              <div class="md:flex justify-between gap-2 mt-5">
+                <button type="submit" class="bg-[#2F318B] px-12 py-4 rounded-md font-bold text-white w-full md:w-auto">Simpan</button>
+                <button type="submit" class="button-secondary text-center w-full md:w-auto">
                   Ubah Kata Sandi
                 </button>
               </div>
             </form>
             <!-- avatar image upload -->
-            <div class="md:w-1/3 w-ful flex justify-center items-center flex-col">
-              <img v-if="form.image==null"
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                alt=""
-                class="w-36 h-36 rounded-full object-cover mb-4"
-              />
-              <img v-if="form.image!==null"
-                :src="form.image"
-                alt=""
-                class="w-36 h-36 rounded-full object-cover mb-4"
-              />
+            <div class="hidden md:w-1/3 w-ful md:flex justify-center items-center flex-col">
+              <img v-if="form.image==null" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="" class="w-36 h-36 rounded-full object-cover mb-4"/>
+              <img v-if="form.image!==null" :src="form.image" alt="" class="w-36 h-36 rounded-full object-cover mb-4"/>
               <input type="file" @change="handleImageChange" accept=".png,.jpg,.jpeg" id="gambar" hidden>
               <label class="button-primary cursor-pointer" for="gambar">Pilih Gambar</label>
               <p class="text-sm text-gray-500 mt-2">Ukuran gambar: maks 1 MB</p>
@@ -233,35 +233,5 @@ export default {
           </div>
         </div>
         <!-- footer -->
-        <footer class="bg-gray-300 p-4 flex justify-center md:justify-start py-4">
-          <img src="@assets/images/logo.png" alt="" />
-        </footer>
-        <!-- Bottom Bar -->
-        <div
-          x-data="{ isMobile: window.innerWidth <= 768 }"
-          x-init="() => { window.addEventListener('resize', () => { isMobile = window.innerWidth <= 768 }) }"
-          class="fixed bottom-0 left-0 right-0 bg-white px-4 py-6 text-blue-500 shadow-md flex items-center justify-between md:hidden"
-          x-show="isMobile"
-        >
-          <!-- Icon Menu 1 -->
-          <a href="#" class="flex items-center justify-center mx-2">
-            <i class="fa-solid fa-home fa-lg"></i>
-          </a>
-          <!-- Icon Menu 2 -->
-          <a href="#" class="flex items-center justify-center mx-2">
-            <i class="fa-solid fa-gift fa-lg"></i>
-          </a>
-          <!-- Icon Menu 3 -->
-          <a href="#" class="flex items-center justify-center mx-2">
-            <i class="fa-solid fa-warehouse fa-lg"></i>
-          </a>
-          <!-- Icon Menu 4 -->
-          <a href="#" class="flex items-center justify-center mx-2">
-            <i class="fa-solid fa-bell fa-lg"></i>
-          </a>
-          <!-- Icon Menu 5 -->
-          <a href="#" class="flex items-center justify-center mx-2">
-            <i class="fa-solid fa-clock-rotate-left fa-lg"></i>
-          </a>
-        </div>
+    <Footer/>
 </template>

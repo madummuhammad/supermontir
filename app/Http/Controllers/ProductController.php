@@ -12,9 +12,11 @@ class ProductController extends Controller
     {
         $product = Product::get();
         $category = Category::get();
+        $keyword = request('keyword');
         return Inertia::render('Product/Index', [
             'product' => $product,
             'category' => $category,
+            'keyword' => $keyword,
         ]);
     }
 

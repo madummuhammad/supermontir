@@ -1,11 +1,12 @@
 <script>
 import { Link } from '@inertiajs/vue3'
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,onBeforeMount } from 'vue';
 import axios from 'axios';
 
 export default {
     props:{
         dataFromParent: String,
+        dataNotification:String
     },
      watch: {
         dataFromParent(newValue) {
@@ -14,12 +15,18 @@ export default {
             console.log('listCart',this.listCart)
             console.log('Data di child diperbarui:', newValue);
         },
+        dataNotification(newValue){
+            let filteredNotifications =newValue.filter(notification => notification.is_read === 0);
+            this.listNotification= filteredNotifications;
+            console.log('listNotification',this.listNotification)
+        }
     },
     setup() {
         const userData = ref([]);
         const logged = ref(false);
-        onMounted(() => {
+        onBeforeMount(() => {
             fetchUser();
+            getNotification()
         });
         var cartShow=ref(false)
         const openCart=()=>{
@@ -32,7 +39,7 @@ export default {
             axios.get('/api/cart/get')
             .then(response => {
                 listCart.value=response.data.data;
-                console.log(listCart.value)
+                console.log('listCart',listCart.value)
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);
@@ -77,9 +84,27 @@ export default {
                 });
         }
 
+        let listNotification = ref([])
+        const getNotification = () => {
+            axios.get('/api/notification/list')
+                .then(response => {
+                    console.log(response.data)
+                    let data = response.data
+                  let filteredNotifications = data.data.filter(notification => notification.is_read === 0);
+
+                    // Simpan hasil filter ke listNotification
+                    listNotification.value = filteredNotifications;
+                    console.log('notification', listNotification.value);
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                });
+        }
+
         return {
             closeCartOutside,
             userData,
+            listNotification,
             getCart,
             openCart,
             listCart,
@@ -98,9 +123,7 @@ export default {
             <!-- nav -->
             <nav class="bg-white border-gray-200">
                 <div class=" px-12 flex justify-end">
-                    <div
-                        class="font-medium hidden md:flex justify-start gap-6 p-4 md:p-0 mt-4 rounded-lg rtl:space-x-reverse items-center"
-                      >
+                    <div class="font-medium hidden md:flex justify-start gap-6 p-4 md:p-0 mt-4 rounded-lg rtl:space-x-reverse items-center">
                         <div>
                           <p class="text-sm">
                             Pusat Panggilan <span class="font-bold">021–569 49 669</span>
@@ -108,81 +131,49 @@ export default {
                         </div>
 
                         <div class="flex items-center gap-2">
-                          <a class="flex-grow">
-                            <p class="text-sm bg-gray-200">IN</p>
-                          </a>
-
-                          <a class="flex-grow">
-                            <a href="/"
-                              ><i class="fa-solid fa-bell fa-xl text-gray-600">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v25.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm0 96c61.9 0 112 50.1 112 112v25.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V208c0-61.9 50.1-112 112-112zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"/></svg></i
-                            ></a>
-                          </a>
+                            <Link href="/user/notification" class="relative"><i class="fa-solid fa-bell fa-xl text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v25.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm0 96c61.9 0 112 50.1 112 112v25.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V208c0-61.9 50.1-112 112-112zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"/></svg></i>
+                                  <div class="absolute bg-yellow-400 w-[20px] text-white h-[20px] flex items-center justify-center top-[-100%] right-[-100%] rounded-[100%] text-xs" v-if="listNotification.length>0">
+                                    <div v-if="listNotification.length<10">
+                                        {{ listNotification.length }}
+                                    </div>
+                                    <div v-if="listNotification.length>=10">
+                                        10+
+                                    </div>
+                                  </div>
+                            </Link>
                         </div>
                       </div>
                 </div>
-              <div
-                class="max-w-screen-xl flex md:flex items-center justify-between mx-auto p-4"
-              >
-                <div
-                  class="flex items-center w-full justify-end space-x-3 rtl:space-x-reverse md:flex-row-reverse"
-                >
+              <div class="sm:fixed z-10 md:static max-w-screen left-0 right-0 bg-white flex md:flex items-center justify-between mx-auto p-4">
+                <div class="flex items-center w-full md:justify-end space-x-3 rtl:space-x-reverse md:flex-row-reverse">
                   <a href="#" class="flex justify-start items-start gap-2 ps-2">
                     <img src="@assets/images/icon/hamburger-box.svg" alt="" />
                     <span class="text-sm text-gray-600 hidden md:block">MENU</span>
                   </a>
-                  <a
-                    href="/"
-                    class="flex items-center space-x-3 rtl:space-x-reverse me-4 md:border-e-2 pe-2"
-                  >
+                  <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse me-4 md:border-e-2 pe-2">
                     <img class="md:w-full md:h-[50px] h-8 w-40" src="@assets/images/logo.png" />
                   </a>
                 </div>
-                <div class="w-full">
-                     <form class="md:me-5 me-2 w-full">
-                            <label
-                              for="default-search"
-                              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-                              >Search</label
-                            >
-                            <div class="relative flex items-center">
-                              <div
-                                class="absolute inset-y-0 md:end-2 end-6 flex items-center ps-3 pointer-events-none"
-                              >
-                                <svg
-                                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                                  />
+                <div class="w-full hidden md:block">
+                    <form class="md:me-5 me-2 w-full" action="/product">
+                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white" >Search</label>
+                        <div class="relative flex items-center">
+                            <div class="absolute inset-y-0 md:end-2 end-6 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                                 </svg>
-                              </div>
-                              <input
-                                type="search"
-                                id="default-search"
-                                class="block w-full py-2 ps-2 pe-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 0"
-                                placeholder="Cari Produk..."
-                                required
-                              />
                             </div>
-                          </form>
+                            <input type="search" id="default-search" name="keyword" class="block w-full py-2 ps-2 pe-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 0" placeholder="Cari Produk..." required/>
+                        </div>
+                    </form>
                 </div>
                 <div class="md:flex flex-col" id="navbar-default">
                   <div class="flex justify-between items-center">
                     <div class="flex items-center gap-1 justify-start relative">
 
                       <Link href="/cart" @mouseover="openCart" class="relative md:ml-2 border-[#2F318B] border-2 rounded-md py-1 px-2 flex items-center justify-center w-[40px] h-[40px]">
-                        <i
-                          class="fa-solid fa-cart-shopping md:fa-2xl fa-xl text-gray-600"
-                        >
+                        <i class="fa-solid fa-cart-shopping md:fa-2xl fa-xl text-gray-600">
                     <svg fill="#2F318B" xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"/></svg>
                     </i>
                     <div v-if="listCart.length>0" class="absolute bg-yellow-400 w-[30px] text-white h-[30px] flex items-center justify-center top-[-50%] right-[-20%] rounded-[100%]">
@@ -211,14 +202,14 @@ export default {
                     <div class="md:flex items-center gap-2">
                       <!-- Icon Menu 2 -->
                       <div class="hidden md:block">
-                        <a
-                          href="#"
+                        <Link
+                          href="/user/point"
                           class="md:ml-2 border-[#2F318B] border-2 rounded-md py-1 px-2 flex items-center justify-center w-[40px] h-[40px]"
                         >
                           <i class="fa-solid fa-gift fa-xl text-[#2F318B]">
                             <svg fill="#2F318B" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M190.5 68.8L225.3 128H224 152c-22.1 0-40-17.9-40-40s17.9-40 40-40h2.2c14.9 0 28.8 7.9 36.3 20.8zM64 88c0 14.4 3.5 28 9.6 40H32c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32H480c17.7 0 32-14.3 32-32V160c0-17.7-14.3-32-32-32H438.4c6.1-12 9.6-25.6 9.6-40c0-48.6-39.4-88-88-88h-2.2c-31.9 0-61.5 16.9-77.7 44.4L256 85.5l-24.1-41C215.7 16.9 186.1 0 154.2 0H152C103.4 0 64 39.4 64 88zm336 0c0 22.1-17.9 40-40 40H288h-1.3l34.8-59.2C329.1 55.9 342.9 48 357.8 48H360c22.1 0 40 17.9 40 40zM32 288V464c0 26.5 21.5 48 48 48H224V288H32zM288 512H432c26.5 0 48-21.5 48-48V288H288V512z"/></svg>
                           </i>
-                        </a>
+                        </Link>
                       </div>
                       <!-- Icon Menu 3 -->
                       <div class="hidden md:block">

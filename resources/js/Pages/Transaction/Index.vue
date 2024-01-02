@@ -10,7 +10,7 @@ import { usePage } from '@inertiajs/vue3'
 
 const page = usePage()
 import { useForm } from '@inertiajs/vue3';
-// import Footer from '../../components/Footer.vue';
+import Footer from '../../components/dashboard/Footer.vue';
 
 export default {
     props: {
@@ -91,14 +91,14 @@ export default {
     components: {
         Header,
         Sidebar,
-        // Footer,
+        Footer,
     },
 };
 </script>
 <template>
     <Header />
-    <div class="container-fluid bg-slate-300 pt-5">
-        <div class="container mx-auto">
+                <div class="container-fluid  bg-slate-300 pt-5 md:pb-0 pb-24 min-h-screen">
+                  <div class="container mx-auto mt-20 md:mt-5">
             <div class="flex justify-center gap-5">
                 <Sidebar />
 
@@ -133,6 +133,24 @@ export default {
                             <td class="w-[25%]">Total</td>
                             <td>: Rp. {{number_format(item.total)}}</td>
                         </tr>
+                        <template v-if="item.status=='selesai'">
+                             <tr>
+                                <td class="w-[25%]">Tanggal Service</td>
+                                <td>: {{ item.date_service }}</td>
+                            </tr>
+                             <tr>
+                                <td class="w-[25%]">KM</td>
+                                <td>: {{ item.km }}</td>
+                            </tr>
+                             <tr>
+                                <td class="w-[25%]">Part Penggantian</td>
+                                <td>: {{ item.part_penggantian }}</td>
+                            </tr>
+                             <tr>
+                                <td class="w-[25%]">Catatan Service</td>
+                                <td>: {{ item.note }}</td>
+                            </tr>
+                        </template>
                     </table>
                     <div class="border p-2">
                         <h5 class="fw-bold">Produk :</h5>
@@ -151,32 +169,5 @@ export default {
     </div>
 </div>
 <!-- footer -->
-<footer class="bg-gray-300 p-4 flex justify-center md:justify-start py-4">
-    <img src="@assets/images/logo.png" alt="" />
-</footer>
-<!-- Bottom Bar -->
-<div x-data="{ isMobile: window.innerWidth <= 768 }"
-    x-init="() => { window.addEventListener('resize', () => { isMobile = window.innerWidth <= 768 }) }"
-    class="fixed bottom-0 left-0 right-0 bg-white px-4 py-6 text-blue-500 shadow-md flex items-center justify-between md:hidden"
-    x-show="isMobile">
-    <!-- Icon Menu 1 -->
-    <a href="#" class="flex items-center justify-center mx-2">
-        <i class="fa-solid fa-home fa-lg"></i>
-    </a>
-    <!-- Icon Menu 2 -->
-    <a href="#" class="flex items-center justify-center mx-2">
-        <i class="fa-solid fa-gift fa-lg"></i>
-    </a>
-    <!-- Icon Menu 3 -->
-    <a href="#" class="flex items-center justify-center mx-2">
-        <i class="fa-solid fa-warehouse fa-lg"></i>
-    </a>
-    <!-- Icon Menu 4 -->
-    <a href="#" class="flex items-center justify-center mx-2">
-        <i class="fa-solid fa-bell fa-lg"></i>
-    </a>
-    <!-- Icon Menu 5 -->
-    <a href="#" class="flex items-center justify-center mx-2">
-        <i class="fa-solid fa-clock-rotate-left fa-lg"></i>
-    </a>
-</div></template>
+            <Footer/>
+</template>

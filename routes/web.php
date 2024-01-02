@@ -4,6 +4,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\GarageController;
+use App\Http\Controllers\KuponController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PointController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
@@ -46,6 +49,13 @@ Route::prefix('user')
         Route::post('delete', [GarageController::class, 'destroy'])->name('garage.delete');
 
         Route::get('transaction', [TransactionController::class, 'index']);
+
+        Route::get('kupon', [KuponController::class, 'index']);
+        Route::post('kupon', [KuponController::class, 'store'])->name('kupon.store');
+
+        Route::get('point', [PointController::class, 'index']);
+
+        Route::get('notification', [NotificationController::class, 'index']);
     });
 
 Route::prefix('cart')

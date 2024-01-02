@@ -106,7 +106,7 @@ export default {
 
                 <div class="md:w-2/3 w-11/12">
                     <div class="bg-white p-6 rounded-lg shadow-md w-full" id="content">
-                         <div class=" text-left mb-4">
+                         <div class=" text-left mb-4 border px-5 py-2 rounded-md border-[#2F318B]">
                             <div class="font-bold mb-3">{{ garage.merk }}</div>
                             <table class="mb-3">
                                 <tr>
@@ -131,6 +131,10 @@ export default {
                                     </tr>
                                 </table>
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <p class="font-bold text-[#2F318B]">Riwayat Transaksi</p>
+                            <p class="text-xs">Daftar Riwayat Kendaraan Anda</p>
                         </div>
                         <div class="overflow-x-auto">
                             <div class="w-full">

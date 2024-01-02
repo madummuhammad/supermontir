@@ -70,6 +70,7 @@ export default {
                     onSuccess:(response)=>{
                         modalCheckoutShow.value=false;
                         selectAll.value=false;
+                        window.location.href='/user/transaction'
                         getCart();
                     }
                 });
@@ -197,8 +198,8 @@ export default {
 </script>
 <template>
     <Header  :dataFromParent="listCart" />
-        <div class="container-fluid bg-slate-300 pt-5">
-          <div class="container mx-auto">
+                <div class="container-fluid  bg-slate-300 pt-5 md:pb-0 pb-24 min-h-screen">
+                  <div class="container mx-auto mt-20 md:mt-5">
             <div class="flex justify-center flex-col md:flex-row gap-5">
               <div class="md:w-8/12 w-11/12 mx-auto">
                 <div
@@ -225,9 +226,9 @@ export default {
                 <div class="bg-white mb-5 p-6 rounded-lg shadow-md text-center flex justify-center flex-col gap-4">
                   <!-- pilih semua -->
                   <div class="w-full text-sm py-4 font-medium text-gray-900 bg-white rounded-lg flex justify-around items-top" v-for="(item,index) in listCart">
-                    <div class="flex items-start gap-2">
+                    <div class="flex items-start md:gap-2 me-2 md:me-0">
                       <input type="checkbox" @change="check" v-model="item.check" name="pilih_semua" id="pilih_semua" class="border cursor-pointer"/>
-                      <img :src="item.product.image" class="w-28 ms-2" alt="" />
+                      <img :src="item.product.image" class="md:w-28 w-full ms-2" alt="" />
                     </div>
                     <div class="flex flex-col text-left ps-6">
                       <h2 class="text-lg font-semibold text-blue-900">{{item.product.name}}</h2>
@@ -257,7 +258,7 @@ export default {
                   </div>
                 </div>
               </div>
-              <div class="md:w-3/12 w-11/12 mx-auto pt-9">
+              <div class="md:w-3/12 w-11/12 mx-auto md:pt-9">
                 <div
                   class="w-full text-sm py-4 font-medium text-gray-900 bg-white border border-gray-200 rounded-lg mb-4"
                 >

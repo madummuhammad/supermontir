@@ -19,7 +19,7 @@ export default {
     <div>
         <Header />
             <!-- hero section -->
-        <div class="container-fluid md:mx-auto mb-24 mt-6">
+        <div class="container-fluid md:mx-auto mb-24 mt-20">
           <div class="flex flex-col md:flex-row items-center justify-between">
             <div
               class="w-full text-center md:text-start md:w-1/2 px-4 my-8 md:my-0"

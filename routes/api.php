@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\GarageController;
+use App\Http\Controllers\KuponController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,6 +29,7 @@ Route::prefix('auth')
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::get('me', [AuthController::class, 'me']);
+        Route::post('logout', [AuthController::class, 'logout']);
     });
 
 Route::prefix('profile')
@@ -56,4 +59,19 @@ Route::prefix('transaction')
     ->group(function () {
         Route::post('list', [TransactionController::class, 'list']);
 
+    });
+
+Route::prefix('kupon')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::post('list', [KuponController::class, 'list']);
+
+    });
+
+Route::prefix('notification')
+    ->middleware('auth:sanctum')
+    ->group(function () {
+        Route::get('list', [NotificationController::class, 'list']);
+        Route::post('read/{id}', [NotificationController::class, 'read']);
+        Route::delete('destroy/{id}', [NotificationController::class, 'destroy']);
     });

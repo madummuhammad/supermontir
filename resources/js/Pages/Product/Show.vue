@@ -4,6 +4,7 @@ import Header from '../../components/dashboard/Header.vue';
 import { Link } from '@inertiajs/vue3'
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import Footer from '../../components/dashboard/Footer.vue';
 export default {
     props: {
         product: Object,
@@ -73,15 +74,15 @@ export default {
     },
     components: {
         Header,
-        Link
-        // Footer,
+        Link,
+        Footer,
     },
 }
 </script>
 <template>
     <Header :dataFromParent="listCart" />
-        <div class="container-fluid bg-slate-300 pt-5">
-          <div class="container mx-auto">
+    <div class="container-fluid bg-slate-300 pt-5 md:pb-0 pb-24 min-h-screen">
+        <div class="container mx-auto mt-20 md:mt-5">
             <div class="flex justify-center gap-5">
               <div class="md:w-8/12 w-11/12 mx-auto">
                 <nav class="flex mb-4" aria-label="Breadcrumb">
@@ -173,7 +174,7 @@ export default {
             </div>
           </div>
           <div class="container mx-auto mt-6">
-            <div class="md:w-8/12 w-11/12 md:ms-11">
+            <div class="md:w-8/12 w-full px-4 md:ms-11">
               <div
                 class="bg-white p-6 rounded-lg shadow-md text-center flex justify-center md:flex-row flex-col gap-4"
               >
@@ -189,4 +190,5 @@ export default {
             </div>
           </div>
         </div>
+        <Footer/>
 </template>
