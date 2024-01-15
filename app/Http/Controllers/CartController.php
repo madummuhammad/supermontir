@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Garage;
+use App\Models\Kupon;
+use App\Models\UserKupon;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,8 +15,19 @@ class CartController extends Controller
     public function index()
     {
         $garage = Garage::where('user_id', auth()->user()->id)->get();
+        $kupon = UserKupon::where('status', 'unused')->where('user_id', auth()->user()->id)->with('kupon')->get();
+        foreach ($kupon as $key => $value) {
+            if ($value->kupon->expired_at && Carbon::now()->gt($value->kupon->expired_at)) {
+                if ($value->status == 'unused') {
+                    $value->update(['status' => 'expired']);
+                }
+            }
+        }
+        $kupon = UserKupon::where('status', 'unused')->where('user_id', auth()->user()->id)->with('kupon')->get();
+
         return Inertia::render('Cart/Index', [
             'garage' => $garage,
+            'kupon' => $kupon,
         ]);
     }
 

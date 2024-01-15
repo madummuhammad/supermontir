@@ -10,7 +10,8 @@ import { usePage } from '@inertiajs/vue3'
 const page = usePage()
 export default {
     props:{
-        garage:Object
+        garage:Object,
+        kupon:Object
     },
     watch: {
         listCart: {
@@ -20,8 +21,10 @@ export default {
     },
 },
         },
-    setup(){
+    setup(props){
         let listCart = ref([])
+        let kuponData=ref(props.kupon);
+        var kuponError=ref(null);
         const number_format = (number, decimals, decPoint, thousandsSep) => {
             decimals = decimals || 0;
             number = parseFloat(number);
@@ -53,12 +56,15 @@ export default {
                 });
         }
 
+        var kupon=ref(null);
+
         const submit = () => {
              const checkedItems = listCart.value.filter(item => item.check);
             checkoutData
                 .transform((data) => ({
                     ...{total:total.value},
                     ...{items:checkedItems},
+                    ...{kupon:kupon.value},
                     ...data
                 }))
                 .post(route('checkout.store'), {
@@ -161,6 +167,19 @@ export default {
         const modalCheckoutShow=ref(false);
 
         const showCheckout = () => {
+            console.log(kuponData.value)
+            if(kupon.value!==null){
+                const filterKupon = kuponData.value.filter(item => item.kupon.code === kupon.value && item.status === 'unused');
+                if(filterKupon.length==0){
+                    kuponError.value='Kupon Tidak Ditemukan'
+                    return;
+                } else {
+                    console.log('filter',filterKupon[0].kupon)
+                    total.value=total.value-filterKupon[0].kupon.discount
+                    kuponError.value=null;
+                }
+            }
+            // console.log('filter',filterKupon)
             const hasCheckedItems = listCart.value.some(item => item.check);
             if (hasCheckedItems) {
                 modalCheckoutShow.value = true;
@@ -186,6 +205,10 @@ export default {
             number_format,
             selectAll,
             page,
+            // Kupon
+            kupon,
+            kuponError,
+            kuponData,
             deleteCart
         }
     },
@@ -272,6 +295,11 @@ export default {
                     <p class="font-bold">Rp. {{number_format(total)}}</p>
                   </div>
                   <div class="px-4 py-2">
+                    <div class="mb-3">
+                        <label for="">Kupon Anda</label>
+                        <input type="text" class="w-full mt-2" v-model="kupon">
+                        <p class="text-red-700 text-sm text-left">{{ kuponError }}</p>
+                    </div>
                     <button class="bg-[#2F318B] w-full py-3 text-white font-semibold rounded-md" @click="showCheckout">Checkout</button>
                      <div class="modal fixed inset-0 z-50 overflow-auto bg-gray-500 bg-opacity-50" v-if="modalCheckoutShow">
                 <div class="modal-content bg-white mx-auto my-10 p-6 rounded w-1/2">

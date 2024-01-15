@@ -45,7 +45,19 @@ export default {
             return formattedNumber;
         }
 
-
+        const pay=(xendit_order_id)=>{
+            axios.post('/api/transaction/get_invoice', { xendit_order_id: xendit_order_id })
+                .then(response => {
+                    let data = response.data.data;
+                    console.log('data', data)
+                    if(data.status=='PENDING'){
+                        window.open(data.invoice_url)
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching user data:', error);
+                });
+        }
 
         onMounted(() => {
             getList();
@@ -80,6 +92,7 @@ export default {
             number_format,
             // submit,
             page,
+            pay,
             pageStatus,
             changePageStatus,
             listNew
@@ -116,6 +129,21 @@ export default {
             <!-- content -->
             <div class="w-full">
                 <div class="border-2 mb-2 mt-2 py-2 px-2" v-for="(item,index) in listNew">
+                    <div  v-if="item.order_payment && item.order_payment.status == 'unpaid'">
+                        <div class="flex justify-end">
+                            <div class="px-2 text-sm bg-red-500 text-white rounded-lg mb-3 w-fit">
+                                Unpaid
+                            </div>
+                        </div>
+                        <!-- <div class="px-4 py-2 bg-green-500 text-white rounded-lg mb-3">
+                            Unpaid
+                        </div> -->
+                        <div class="flex justify-end">
+                        <div @click="pay(item.order_payment.xendit_order_id)" class="cursor-pointer text-xs px-2 py-1 bg-blue-500 block w-fit text-white font-semibold rounded-md">
+                            Selesaikan pembayaran >
+                        </div>
+                        </div>
+                    </div>
                     <table class="w-full mb-3">
                         <tr>
                             <td class="w-[25%]">Kendaraan</td>

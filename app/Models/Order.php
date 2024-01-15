@@ -32,4 +32,9 @@ class Order extends Model
     {
         return $this->belongsTo('App\Models\Garage');
     }
+
+    public function order_payment()
+    {
+        return $this->belongsTo('App\Models\OrderPayment', 'id', 'order_id');
+    }
 }

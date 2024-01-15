@@ -24,29 +24,19 @@ export default {
             <div
               class="w-full text-center md:text-start md:w-1/2 px-4 my-8 md:my-0"
             >
-              <h1 class="text-3xl md:text-5xl font-bold">
-                Drive Business Growth &
+              <h1 class="text-3xl md:text-5xl font-bold text-[#2F318B]">
+                Service Kendaraan dirumah aja, biar kami yang datang.
               </h1>
-              <h1 class="text-3xl md:text-5xl font-bold">On Demand Experiences</h1>
               <p class="mt-6">
-                Dignissim a, velit odio sed convallis facilisi vulputate.
-                Consectetur ultricies metus porttitor id urna, sapien mauris sed.
-                Quis placerat ac urna, massa lectus. Consequat eu eu quam id sit
-                consequat condimentum.
+              SuperMontir hadir untuk memberikan layanan service yang lebih dari sekedar service, karena kami akan memberikan service yang Nyaman, Tanpa Antri, Transparant, Parts yang Original, Saran Perbaikan yang Jujur dan Montir yang berpengalaman.
               </p>
               <div class="flex gap-6 mt-6 justify-evenly">
-                <Link href="/product" type="button" class="hero-button">
-                  <span class="px-1"
-                    ><i class="fa-solid fa-circle fa-2xl" style="color: #e4e1e1"></i
-                  ></span>
+                <Link href="/product" class="text-white py-2 px-5 bg-[#2F318B] flex items-center justify-center rounded-2xl">
                   <span>Home Services</span>
                 </Link>
-                <button type="button" class="hero-button">
-                  <span class="px-1"
-                    ><i class="fa-solid fa-circle fa-2xl" style="color: #e4e1e1"></i
-                  ></span>
+                <Link class="text-white py-2 px-5 bg-[#2F318B] flex items-center justify-center rounded-2xl">
                   <span>Layanan Darurat</span>
-                </button>
+                </Link>
               </div>
             </div>
             <div class="w-full md:w-1/2 mt-4 md:mt-0 px-4 md:px-0">
@@ -63,17 +53,13 @@ export default {
         <div class="container-fluid md:mx-auto mb-24">
           <div class="container mx-auto w-10/12 text-center">
             <h2 class="text-3xl md:hidden font-bold mt-6">
-              Drive Business Growth & On Demand Experiences
+              Kenapa harus SuperMontir
             </h2>
             <h2 class="text-2xl md:text-3xl font-bold mt-6">
-              Bibendum amet at molestie mattis.
+             Kenapa harus SuperMontir
             </h2>
             <p class="mt-6">
-              Rhoncus morbi et augue nec, in id ullamcorper at sit. Condimentum sit
-              nunc in eros scelerisque sed. Commodo in viverra nunc, ullamcorper ut.
-              Non, amet, aliquet scelerisque nullam sagittis, pulvinar. Fermentum
-              scelerisque sit consectetur hac mi. Mollis leo eleifend ultricies
-              purus iaculis.
+             Karena SuperMontir hadir untuk memberikan service berdasarkan dari kebutuhan dari pelanggan kami
             </p>
             <div class="mt-6 flex gap-4 justify-between flex-col md:flex-row">
               <div class="md:w-1/4 border border-gray-700 md:border-0 p-2">

@@ -58,6 +58,7 @@ Route::prefix('transaction')
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::post('list', [TransactionController::class, 'list']);
+        Route::post('get_invoice', [TransactionController::class, 'get_invoice']);
 
     });
 
