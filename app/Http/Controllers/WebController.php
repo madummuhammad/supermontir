@@ -18,4 +18,9 @@ class WebController extends Controller
 
         return Inertia::render('Web/Index');
     }
+
+    public function contact()
+    {
+        return Inertia::render('Web/Contact');
+    }
 }

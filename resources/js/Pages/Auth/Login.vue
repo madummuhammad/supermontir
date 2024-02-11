@@ -1,7 +1,7 @@
 <script>
 import { ref  } from 'vue';
 import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
+import Footer from '../../components/dashboard/Footer.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 export default {
     setup() {
@@ -45,7 +45,7 @@ export default {
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                     Login
                     </h1>
-                    <form class="space-y-4 md:space-y-6" action="#" @submit.prevent="submit">
+                    <form class="space-y-4 md:space-y-6" @submit.prevent="submit">
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
                             <input type="email" v-model="form.email" name="email" id="email" :class="{ 'border-red-700': form.errors.email }"
@@ -68,10 +68,7 @@ export default {
                                 <label for="terms" class="font-light text-gray-500" >Tampilkan sandi?</label>
                             </div>
                     </div>
-                   <button type="submit"
-                                class="w-full text-white bg-[#2F318B] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center " :class="{ 'opacity-50': form.processing }" :disabled="form.processing">
-                                Login
-                            </button>
+                   <button class="w-full text-white bg-[#2F318B] py-2 rounded-md" :class="{ 'opacity-50': form.processing }" :disabled="form.processing">Login</button>
                     <p class="text-sm font-light text-gray-500 ">
                         Belum punya akun? <Link href="/register" class="font-medium text-primary-600 hover:underline ">Daftar
                             disini</Link>
@@ -81,4 +78,5 @@ export default {
         </div>
     </div>
 </section>
-<Footer /></template>
+<Footer/>
+</template>

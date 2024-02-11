@@ -19,7 +19,7 @@ class TransactionController extends Controller
         try {
             $payment = OrderPayment::where('user_id', auth()->user()->id)->where('status', 'unpaid')->get();
             foreach ($payment as $key => $value) {
-                if($value->xendit_order_id!==null){
+                if ($value->xendit_order_id !== null) {
                     $result = $apiInstance->getInvoiceById($value->xendit_order_id);
                     if ($result['status'] == 'PAID' or $result['status'] == 'SETTLED') {
                         OrderPayment::where('id', $value->id)->update([
@@ -40,7 +40,7 @@ class TransactionController extends Controller
     {
         $status = $request->status;
 
-        $order = Order::where('status', $status)->with('item_order.product', 'garage', 'order_payment')->get();
+        $order = Order::where('status', $status)->where('user_id', auth()->user()->id)->with('item_order.product', 'garage', 'order_payment')->get();
 
         return response()->json(['status' => 'success', 'data' => $order]);
     }

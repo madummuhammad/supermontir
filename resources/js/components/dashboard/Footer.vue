@@ -45,9 +45,48 @@ export default {
 }
 </script>
 <template>
-<footer class="hidden bg-gray-300 p-4 md:flex justify-center md:justify-start py-4">
-      <img src="@assets/images/logo.png" alt="" />
-    </footer>
+        <a href="https://wa.me/6281188812272?text=Halo%20SuperMontir,%20saya%20mau%20service%20kendaraan%20saya%20nih" target="_blank" class="fixed right-10 bottom-24 md:bottom-10">
+            <div class="flex flex-col items-center justify-center">
+                <img src="@assets/images/wa.svg" class="block h-[50px] w-[50px]" alt="">
+                <div class="mt-1 font-semibold">Konsultasi Gratis </div>
+            </div>
+        </a>
+            <footer class="bg-[#D9D9D9] items-center justify-between px-10 py-5 hidden md:flex">
+                <div>
+                    <img src="@assets/images/logo.png" alt="" />
+                    <h1 class="font-bold mt-4 text-center md:text-left">PT. Super Montir Indonesia</h1>
+                    <p class=" text-center md:text-left">Ruko Permata Regency blok D no 37,<br>
+                        Jl. Haji Kelik, Srengseng, Kembangan<br>
+                        JAKARTA BARAT
+                    </p>
+                    <p class="mt-4  text-center md:text-left">
+                        0811 8881 2272
+                    </p>
+                </div>
+                <div class="hidden md:block">
+                    <Link class="font-bold block mt-4">Product & Service</Link>
+                    <Link class="font-bold block mt-4">FAQ</Link>
+                    <Link class="font-bold block mt-4">Kontak Kami</Link>
+                </div>
+            </footer>
+            <footer class="bg-[#D9D9D9] items-center justify-center px-10 py-5 flex md:hidden">
+                <div>
+                    <img src="@assets/images/logo.png" alt="" />
+                    <h1 class="font-bold mt-4 text-center md:text-left">PT. Super Montir Indonesia</h1>
+                    <p class=" text-center md:text-left">Ruko Permata Regency blok D no 37,<br>
+                        Jl. Haji Kelik, Srengseng, Kembangan<br>
+                        JAKARTA BARAT
+                    </p>
+                    <p class="mt-4  text-center md:text-left">
+                        0811 8881 2272
+                    </p>
+                </div>
+                <div class="hidden md:block">
+                    <Link href="/product" class="font-bold block mt-4">Product & Service</Link>
+                    <Link class="font-bold block mt-4">FAQ</Link>
+                    <Link href="/contact" class="font-bold block mt-4">Kontak Kami</Link>
+                </div>
+            </footer>
     <!-- Bottom Bar -->
 <div class="fixed bottom-0 left-0 right-0 bg-white px-4 py-2 text-blue-500 shadow-md flex items-center justify-between md:hidden">
       <Link href="/" class="mx-2 flex-1 flex flex-col items-center">

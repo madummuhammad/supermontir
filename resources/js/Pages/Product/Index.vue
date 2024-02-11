@@ -120,6 +120,7 @@ export default{
                     console.log(response.data);
                 })
                 .catch(error => {
+                    window.location.href='/login'
                     console.error('Error fetching user data:', error);
                 });
         };

@@ -1,7 +1,7 @@
 <script>
 import { ref } from 'vue';
 import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
+import Footer from '../../components/dashboard/Footer.vue';
 import { Link, useForm  } from '@inertiajs/vue3';
 export default{
 
@@ -82,7 +82,7 @@ export default{
                             <label for="terms" class="font-light text-gray-500">Tampilkan sandi?</label>
                           </div>
                       </div>
-                        <button type="submit"
+                        <button
                             class="w-full text-white bg-[#2F318B] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center " :class="{ 'opacity-50': form.processing }" :disabled="form.processing">
                             Daftar
                         </button>

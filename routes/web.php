@@ -30,11 +30,10 @@ Route::get('register', [AuthController::class, 'register']);
 Route::post('register', [AuthController::class, '_register'])->name('register');
 Route::get('/', [WebController::class, 'index']);
 Route::get('/home', [WebController::class, 'index']);
+Route::get('/contact', [WebController::class, 'contact']);
 
 Route::get('/product', [ProductController::class, 'index']);
 Route::get('/product/{id}', [ProductController::class, 'show']);
-
-Route::get('/cart', [CartController::class, 'index']);
 
 Route::prefix('user')
     ->middleware('auth')
@@ -62,6 +61,7 @@ Route::prefix('cart')
     ->middleware('auth')
     ->group(function () {
         Route::post('store', [CartController::class, 'store']);
+        Route::get('/', [CartController::class, 'index']);
     });
 
 Route::prefix('checkout')

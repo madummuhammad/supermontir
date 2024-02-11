@@ -58,13 +58,13 @@ export default {
              <div :class="{ 'hidden': !mobileMenuOpen, 'w-full': true, 'md:block': true, 'md:w-auto': true }" id="navbar-default">
               <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white items-center">
                 <li class="flex-grow">
-                  <a href="#" class="nav-link" aria-current="page">Product & Services</a>
+                  <a href="/product" class="nav-link" aria-current="page">Product & Services</a>
                 </li>
                 <li class="flex-grow">
                   <a href="#" class="nav-link">FAQ</a>
                 </li>
                 <li class="flex-grow">
-                  <a href="#" class="nav-link">Kontak Kami</a>
+                  <a href="/contact" class="nav-link">Kontak Kami</a>
                 </li>
                 <li class="flex-grow">
                   <a href="#" class="nav-link"
